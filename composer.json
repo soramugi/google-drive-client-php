@@ -1,7 +1,7 @@
 {
     "name": "soramugi/google-drive-client-php",
     "type": "library",
-    "keywords": ['google drive'],
+    "keywords": ["google", "drive", "spreadsheet"],
     "require": {
         "bitgandtter/google-api": "0.6.2"
     },
