@@ -4,19 +4,12 @@ namespace Soramugi\GoogleDrive;
 
 class File extends \Google_DriveFile
 {
+    protected $__labelsType = 'Soramugi\GoogleDrive\FileLabels';
+
     /** var Google_Client $_client */
     private $_client;
 
     private $_optParams = array();
-
-    public function __construct()
-    {
-        foreach (func_get_args() as $arg) {
-            if (get_class($arg) === 'Soramugi\GoogleDrive\Client') {
-                $this->_client = $arg;
-            }
-        }
-    }
 
     public function setClient($client)
     {
@@ -44,5 +37,25 @@ class File extends \Google_DriveFile
     public function setOptParams(array $optParams)
     {
         return $this->_optParams = $optParams;
+    }
+
+    /**
+     * @param folder id $parentId
+     */
+    public function setParentId($parentId)
+    {
+        $parent = new ParentReference();
+        $parent->setId($parentId);
+        $this->setParents(array($parent));
+    }
+
+    public function isFolder()
+    {
+        return $this->getMimeType() === 'application/vnd.google-apps.folder';
+    }
+
+    protected function useObjects()
+    {
+        return true;
     }
 }

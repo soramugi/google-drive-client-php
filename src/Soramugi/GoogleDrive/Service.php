@@ -6,7 +6,7 @@ class Service extends \Google_DriveService
 {
     public function __construct($client)
     {
-        $client->setUseObjects(true);
+        $client->setUseObjects(false);
         return parent::__construct($client);
     }
 
