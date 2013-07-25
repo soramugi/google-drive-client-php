@@ -4,17 +4,26 @@ namespace Soramugi\GoogleDrive;
 
 class Files
 {
+    private $_client;
     private $_service;
 
     public function __construct($client)
     {
-        $this->_service = new Service($client);
+        $this->_client = $client;
+    }
+
+    public function getService()
+    {
+        if (!$this->_service) {
+            $this->_service = new Service($this->_client);
+        }
+        return $this->_service;
     }
 
     public function __call($method, $args)
     {
         $data = call_user_func_array(
-            array($this->_service->getFiles(), $method),
+            array($this->getService()->getFiles(), $method),
             $args
         );
         $fileMethods = array(

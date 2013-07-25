@@ -16,9 +16,14 @@ class File extends \Google_DriveFile
         return $this->_client = $client;
     }
 
+    public function getFiles()
+    {
+        return new Files($this->_client);
+    }
+
     public function insert($data)
     {
-        $files = new Files($this->_client);
+        $files = $this->getFiles();
         $optParams = array_merge(
             array(
                 'data'     => $data,
