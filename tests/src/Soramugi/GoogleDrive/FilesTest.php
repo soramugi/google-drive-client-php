@@ -9,9 +9,8 @@ class FilesTest extends \PHPUnit_Framework_TestCase
 {
     function setUp()
     {
-        $service = Mockery::mock('Soramugi\GoogleDrive\Service');
-        $files = Mockery::mock('Soramugi\GoogleDrive\Files[getService]');
-        $files->shouldReceive('getService')->andReturn($service);
+        $client = Mockery::mock('Soramugi\GoogleDrive\Client');
+        $files = new Files($client);
         $this->files = $files;
     }
 
@@ -20,11 +19,17 @@ class FilesTest extends \PHPUnit_Framework_TestCase
         $this->files = null;
     }
 
-    function testCall()
+    //function testGetService()
+    //{
+    //    $this->assertInstanceOf(
+    //        'Soramugi\GoogleDrive\Service',
+    //        $this->files->getService()
+    //    );
+    //}
+
+    function testNew()
     {
-        $client = Mockery::mock('Soramugi\GoogleDrive\Client');
-        $files = new Files($client);
-        $this->assertInstanceOf('Soramugi\GoogleDrive\Files', $files);
+        $this->assertInstanceOf('Soramugi\GoogleDrive\Files', $this->files);
     }
 
     //function testListFiles()
@@ -34,4 +39,33 @@ class FilesTest extends \PHPUnit_Framework_TestCase
     //        $this->files->listFiles()
     //    );
     //}
+
+    function testSearchTitle()
+    {
+        $fileFoo = Mockery::mock('Soramugi\GoogleDrive\File[getTitle]');
+        $fileHivarbor = clone $fileVar = clone $fileFoo;
+        $fileFoo->shouldReceive('getTitle')->andReturn('foo');
+        $fileVar->shouldReceive('getTitle')->andReturn('var');
+        $fileHivarbor->shouldReceive('getTitle')->andReturn('hivarbor');
+
+        $fileList = Mockery::mock('Soramugi\GoogleDrive\FileList[getItems]');
+        $fileList->shouldReceive('getItems')->andReturn(
+            array($fileFoo, $fileVar, $fileHivarbor)
+        );
+
+        $files = Mockery::mock('Soramugi\GoogleDrive\Files[listFiles]');
+        $files->shouldReceive('listFiles')->andReturn($fileList);
+
+        $keyword = 'neko';
+        $_files = array();
+        $this->assertEquals($_files, $files->searchTitle($keyword));
+
+        $keyword = 'foo';
+        $_files = array($fileFoo);
+        $this->assertEquals($_files, $files->searchTitle($keyword));
+
+        $keyword = 'var';
+        $_files = array($fileVar, $fileHivarbor);
+        $this->assertEquals($_files, $files->searchTitle($keyword));
+    }
 }
