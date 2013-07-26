@@ -4,8 +4,8 @@ namespace Soramugi\GoogleDrive;
 
 class Files
 {
-    private $_client;
-    private $_service;
+    protected $_client;
+    protected $_service;
 
     public function __construct($client)
     {
@@ -14,10 +14,7 @@ class Files
 
     public function getService()
     {
-        if (!$this->_service) {
-            $this->_service = new Service($this->_client);
-        }
-        return $this->_service;
+        return $this->_service ? : new Service($this->_client);
     }
 
     public function __call($method, $args)
@@ -30,9 +27,7 @@ class Files
             'copy', 'get', 'insert', 'patch',
             'touch', 'trash', 'untrash', 'update'
         );
-        return in_array($method, $fileMethods)
-            ? new File($data)
-            : $data;
+        return in_array($method, $fileMethods) ? new File($data) : $data;
     }
 
     public function listFiles()

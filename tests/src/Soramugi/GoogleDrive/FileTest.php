@@ -17,12 +17,21 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->file = null;
     }
 
-    //function testSetClient()
-    //{
-    //    $client = new \Soramugi\GoogleDrive\Client;
-    //    $_client = $this->file->setClient($client);
-    //    $this->assertEquals($client, $_client);
-    //}
+    function testSetClient()
+    {
+        $client = Mockery::mock('Soramugi\GoogleDrive\Client');
+        $this->assertEquals($client, $this->file->setClient($client));
+    }
+
+    function testGetFiles()
+    {
+        $client = Mockery::mock('Soramugi\GoogleDrive\Client');
+        $this->file->setClient($client);
+        $this->assertInstanceOf(
+            'Soramugi\GoogleDrive\Files',
+            $this->file->getFiles()
+        );
+    }
 
     function testInsert()
     {
