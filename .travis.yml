@@ -2,8 +2,8 @@ language: php
 php:
   - "5.4"
   - "5.3"
-before_script: composer install --no-dev
-script: phpunit --coverage-text
+before_script: composer install --dev
+script: ./vendor/bin/phpunit
 
 notifications:
   emails: soramugi.chika@gmail.com
