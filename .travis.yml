@@ -1,0 +1,12 @@
+language: php
+php:
+  - "5.4"
+  - "5.3"
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+script: ./vendor/bin/phpunit
+
+notifications:
+  emails: soramugi.chika@gmail.com
+  on_failure: always
