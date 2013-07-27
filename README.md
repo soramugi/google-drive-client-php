@@ -25,7 +25,7 @@ composer.json
     curl -s http://getcomposer.org/installer | php
     php composer.phar install
 
-### Using code
+## Usage
 
 #### Attestation
 
@@ -54,8 +54,6 @@ get json type string access_token.
 
 ```php
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-
 $files = new Soramugi\GoogleDrive\Files($client);
 
 foreach ($files->listFiles()->getItems() as $item) {
@@ -82,6 +80,14 @@ echo $createdFile->getTitle() . "\n";
 When adding into folder, id of forder file is set up.
 
     $file->setParentId($folderId);
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
 ## License
 
