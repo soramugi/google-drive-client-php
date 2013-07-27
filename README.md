@@ -1,5 +1,7 @@
 # Google Drive Client PHP
 
+[![Build Status](https://travis-ci.org/soramugi/google-drive-client-php.png?branch=master)](https://travis-ci.org/soramugi/google-drive-client-php)
+
 The php library to Google Drive API operate.
 The wrapper which uses the library based on the following library.
 
